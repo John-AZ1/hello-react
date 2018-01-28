@@ -38,7 +38,7 @@ class Heading extends Component {
 class Filter extends Component {
   render() {
     return(
-      <input type="text" style={filterStyle}/>
+      <input type="text" style={filterStyle} onKeyUp={event => this.props.onTextChnage(event.target.value)}/>
     );
   }
 }
@@ -56,7 +56,7 @@ class Item extends Component {
 class App extends Component {
   constructor() {
     super();
-    this.state = {people: []}
+    this.state = {people: [],filterString: ''}
   }
   componentDidMount() {
     this.setState({people: peopleData})
@@ -65,12 +65,25 @@ class App extends Component {
     return (
       <div id="App" style={appStyle}>
         <Heading title="Hello World"/>
-        <Filter/>
+        <Filter onTextChnage={text => this.setState({filterString: text})}/>
         <div style={{textAlign:'center'}}>
           {
             this.state.people[0]
               ?
-                this.state.people.map(person => <Item person={person} id={person.id}></Item>)
+                this.state.people.filter(person =>
+                    person.name.first.toLowerCase().includes(
+                      this.state.filterString.toLowerCase()
+                    )
+                  ||
+                    person.name.last.toLowerCase().includes(
+                      this.state.filterString.toLowerCase()
+                    )
+                  ||
+                    person.age.toString().includes(
+                      this.state.filterString.toLowerCase()
+                    )
+                ).map(person =>
+                    <Item person={person} id={person.id}></Item>)
               :
                 <h2>No Items</h2>
           }
