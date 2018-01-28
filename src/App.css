@@ -1,28 +1,7 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#App {
+  display:grid;
+  grid-template-columns: 20% auto 20%;
+  grid-template-rows: 1fr 30px 1fr;
+  grid-template-areas: ". title .""filter filter filter"". item .";
+  justify-items: center;
 }
