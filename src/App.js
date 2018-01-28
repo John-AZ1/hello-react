@@ -1,15 +1,17 @@
 // Imports
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import peopleData from './peopleData.js';
 // import './App.css';
 
 // Styles
 let appStyle = {
   display:'grid',
-  gridTemplateColumns: '20% auto 20%',
+  gridTemplateColumns: '80%',
   gridTemplateRows: '1fr 30px auto',
-  gridTemplateAreas: '". title .""filter filter filter"',
-  justifyItems: 'center'
+  gridTemplateAreas: '"title""filter" "item"',
+  justifyItems: 'center',
+  justifyContent: 'center'
 }
 let headingStyle = {
   gridArea: 'title'
@@ -19,8 +21,12 @@ let filterStyle = {
   justifySelf: 'stretch'
 }
 let itemStyle = {
-  gridArea: '3/3'
+  // gridArea: 'item',
+  // display: 'grid',
+  // gridTemplateRows: 'auto',
+  // gridTemplateColumns: 'auto',
 }
+
 // Components
 class Heading extends Component {
   render() {
@@ -39,22 +45,36 @@ class Filter extends Component {
 class Item extends Component {
   render() {
     return(
-      <div style={itemStyle}>
-        <h2>{this.props.name}</h2>
-        <h2>{this.props.lastName}</h2>
-        <h2>{this.props.age}</h2>
+      <div style={{display:'inline-block', padding:'20px'}}>
+        <h2>{this.props.person.name.first}</h2>
+        <h2>{this.props.person.name.last}</h2>
+        <h2>{this.props.person.age}</h2>
       </div>
     );
   }
 }
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {people: []}
+  }
+  componentDidMount() {
+    this.setState({people: peopleData})
+  }
   render() {
     return (
       <div id="App" style={appStyle}>
         <Heading title="Hello World"/>
         <Filter/>
-        <Item name="John" lastName="Smith" age="2000"/>
-        <Item name="River" lastName="Song" age="200"/>
+        <div style={{textAlign:'center'}}>
+          {
+            this.state.people[0]
+              ?
+                this.state.people.map(person => <Item person={person} id={person.id}></Item>)
+              :
+                <h2>No Items</h2>
+          }
+        </div>
       </div>
     );
   }
