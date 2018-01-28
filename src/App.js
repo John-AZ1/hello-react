@@ -5,47 +5,57 @@ import peopleData from './peopleData.js';
 // import './App.css';
 
 // Styles
-let appStyle = {
-  display:'grid',
-  gridTemplateColumns: '80%',
-  gridTemplateRows: '1fr 30px auto',
-  gridTemplateAreas: '"title""filter" "item"',
-  justifyItems: 'center',
-  justifyContent: 'center'
+let style = {
+  text: {
+    color: '#fff'
+  },
+  app: {
+    display:'grid',
+    gridTemplateColumns: '80%',
+    gridTemplateRows: '1fr 30px auto',
+    gridTemplateAreas: '"title""filter" "item"',
+    justifyItems: 'center',
+    justifyContent: 'center'
+  },
+  heading: {
+    gridArea: 'title'
+  },
+  filter: {
+    gridArea: 'filter',
+    justifySelf: 'center',
+    color: '#808fa1'
+  },
+  item: {
+    border: '1px #808fa1 solid',
+    display:'inline-block',
+    padding:'20px',
+    width: '130px',
+    borderRadius: '10px',
+    margin: '10px'
+  }
 }
-let headingStyle = {
-  gridArea: 'title'
-}
-let filterStyle = {
-  gridArea: 'filter',
-  justifySelf: 'stretch'
-}
-let itemStyle = {
-  // gridArea: 'item',
-  // display: 'grid',
-  // gridTemplateRows: 'auto',
-  // gridTemplateColumns: 'auto',
-}
+
+
 
 // Components
 class Heading extends Component {
   render() {
     return(
-      <h1 style={headingStyle}>{this.props.title}</h1>
+      <h1 style={{...style.text,...style.heading}}>{this.props.title}</h1>
     );
   }
 }
 class Filter extends Component {
   render() {
     return(
-      <input type="text" style={filterStyle} onKeyUp={event => this.props.onTextChnage(event.target.value)}/>
+      <input type="text" style={style.filter} onKeyUp={event => this.props.onTextChnage(event.target.value)}/>
     );
   }
 }
 class Item extends Component {
   render() {
     return(
-      <div style={{display:'inline-block', padding:'20px'}}>
+      <div style={{...style.text,...style.item}}>
         <h2>{this.props.person.name.first}</h2>
         <h2>{this.props.person.name.last}</h2>
         <h2>{this.props.person.age}</h2>
@@ -63,7 +73,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div id="App" style={appStyle}>
+      <div id="App" style={style.app}>
         <Heading title="Hello World"/>
         <Filter onTextChnage={text => this.setState({filterString: text})}/>
         <div style={{textAlign:'center'}}>
