@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import peopleData from './peopleData.js';
 // import './App.css';
 
+let itemsGrid = 'item0'
 // Styles
 let style = {
   text: {
@@ -13,7 +14,7 @@ let style = {
     display:'grid',
     gridTemplateColumns: '80%',
     gridTemplateRows: '1fr 30px auto',
-    gridTemplateAreas: '"title""filter" "item"',
+    gridTemplateAreas: '"title""filter""item"',
     justifyItems: 'center',
     justifyContent: 'center'
   },
@@ -26,10 +27,12 @@ let style = {
     color: '#808fa1'
   },
   item: {
+    // gridArea: 'item',
     border: '1px #808fa1 solid',
     display:'inline-block',
     padding:'20px',
     width: '130px',
+    height: '180px',
     borderRadius: '10px',
     margin: '10px'
   }
@@ -92,8 +95,10 @@ class App extends Component {
                     person.age.toString().includes(
                       this.state.filterString.toLowerCase()
                     )
-                ).map(person =>
-                    <Item person={person} id={person.id}></Item>)
+                ).map((person,val) => {
+                    return <Item person={person} id={person.id}></Item>
+                  })
+
               :
                 <h2>No Items</h2>
           }
